@@ -22,3 +22,5 @@ jobs:
                     dotnet-version: 8.0.x
             -   name: Teste de Integração
                 env:
+                    ConnectionStrings__DefaultConnections: "Host=localhost;Database=review;Username=review;Password=Password123"
+                run: dotnet test ./src/Review-Filmes.Test.Integration/Review-Filmes.Test.Integration
