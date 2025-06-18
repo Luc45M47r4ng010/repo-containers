@@ -4,11 +4,21 @@ on:
 jobs:
     build-test:
         runs-on: ubuntu-latest
+        services:
+            postgre:
+                image: postgres:16.3
+                env:
+                    POSTGRES_PASSWORD: Password123
+                    POSTGRES_USER: review
+                    POSTGRES_DB: review
+                ports:
+                    - 5432:5432
         steps:
-            -   name: Execução do Runner
-                run: cat /etc/os-release
-            -   name: Execução no container
-                uses: docker://alpine:latest
+            -   name: Checkout
+                uses: actions/checkout@v4
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
                 with:
-                    entrypoint: cat
-                    args: /etc/os-release
+                    dotnet-version: 8.0.x
+            -   name: Teste de Integração
+                env:
